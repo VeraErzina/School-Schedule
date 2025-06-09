@@ -8,9 +8,9 @@ function App() {
   return(
     <>
     <header>
-    <Button name="Учителя" type="Teachers" index="0"/>
-    <Button name="Кабинеты" type="Classroom" index="1"/>
-    <Button name="Классы" type="Classes" index="2"/> 
+    <Button name="Учителя" type="teachers" index="0"/>
+    <Button name="Кабинеты" type="classroom" index="1"/>
+    <Button name="Классы" type="classes" index="2"/> 
     </header>
     <Start/>
     </>

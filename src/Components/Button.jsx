@@ -38,7 +38,7 @@ export default function Button({name, type, index}){
 
 
     function addNewData(value, type) {                       /*СОЗДАЕМ НОВЫЙ ОБЪЕКТ В СПИСКЕ*/
-        if (type == "Teachers") {
+        if (type == "teachers") {
             let arr = value.trim().split(" ")
             let hours = Number(arr.pop())
             return {
@@ -134,7 +134,7 @@ export default function Button({name, type, index}){
                             {element.maxHours !== undefined && `, часов: ${element.maxHours}`}
                                 <div>
                                     <button className='button-delete' onClick={() => deleteData(element.id, type)}><VscChromeClose /></button>
-                                    {(type == "Teachers") &&
+                                    {(type == "teachers") &&
                                     <button 
                                         className={pairId === element.id ? 'button-pair-true' : 'button-pair'}
                                         onClick={() => createPair(element.id)}>
