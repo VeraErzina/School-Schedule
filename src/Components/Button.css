@@ -1,0 +1,87 @@
+button {
+    box-sizing: border-box;
+    background-color: #defdfd;
+    width: 400px;
+    border: 1px solid #8c9799;
+    height: 30px;
+}
+
+button:hover {
+    background-color: #bad4d4;
+    border: 1px solid #686f70;
+}
+
+.dropmenu {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    list-style: none;
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    margin-top: 0;
+}
+
+.button-list {
+    background-color: beige;
+    margin-top: 10px;
+    text-align: left;
+    padding-left: 5px;
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    display: inline-block;
+    width: 400px;
+}
+
+.button-delete{
+    background-color: rgb(221, 87, 87);
+    width: 22px;
+    height: 22px;
+    margin-left: 5px;
+}
+
+.button-pair{
+    background-color: rgb(129, 231, 129);
+    width: 22px;
+    height: 22px;
+    margin-left: 5px;
+}
+
+.button-pair-true{
+    background-color: rgb(85, 76, 76);
+    width: 22px;
+    height: 22px;
+    margin-left: 5px;
+}
+
+.element-dropmenu{
+    border: 1px solid #686f70;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+.card-dropmenu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-dropmenu{
+    position: absolute;
+    width: 100%;
+}
+
+.button-start{
+    width: 200px;
+    height: 100px;
+    background-color: #62cf58;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
