@@ -85,3 +85,14 @@ button:hover {
     margin-right: 20px;
     margin-bottom: 20px;
 }
+
+.stop-server{
+    background-color: rgb(172, 60, 60);
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}

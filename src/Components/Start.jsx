@@ -7,7 +7,7 @@ export default function Start(){
     const [tableData, setTableData] = useState(null);
 
     function getResult(){                                                       /*Отправляем серверу запрос на выполнение команды и получаем данные*/ 
-        fetch("http://localhost:3001/lesssched")
+        fetch("http://localhost:8080/lesssched")
         .then(response => {
             if(!response.ok) {
                 throw new Error("Ошибка запроса!")
@@ -17,6 +17,7 @@ export default function Start(){
         .then(data => {
             setTableData(data);
             console.log("Данные получены");
+            console.log("function getResult:",data);
         })
         .catch(error => {
             console.error("Ошибка при получении данных:", error.message);
@@ -29,7 +30,8 @@ export default function Start(){
         const uniqueDays = [...new Set(data.map(element => element.day))];
         const lessonArray = ["1 урок", "2 урок", "3 урок", "4 урок", "5 урок", "6 урок"];
         const quantityDays = uniqueDays.length;
-    
+        const extraDays = [0, 5, 4, 3, 2, 1, 0];
+        
         function lessonsNum(){
             let result = [];
             for (let i = 0; i < quantityDays; i++){
@@ -59,7 +61,7 @@ export default function Start(){
 
 
 
-        function renderTeacherRow(teacherObj, uniqueDays, quantityDays) {
+        function renderTeacherRow(teacherObj, uniqueDays, quantityDays, extraDays) {
             const cells = [];
 
             for (let i = 0; i < uniqueDays.length; i++) {
@@ -86,17 +88,17 @@ export default function Start(){
 
             return (
                 <tr key={teacherObj.teacher}>
-                    <td colSpan={quantityDays + 1}>{teacherObj.teacher}</td>
+                    <td colSpan={quantityDays + extraDays[quantityDays]}>{teacherObj.teacher}</td>
                     {cells}
                 </tr>
             );
         }
 
 
-        function createTeachersRows(data, uniqueDays) {
+        function createTeachersRows(data, uniqueDays, extraDays, quantityDays) {
             const groupedTeachers = groupByTeachers(data);
             return groupedTeachers.map((teacherObj) =>
-                renderTeacherRow(teacherObj, uniqueDays, quantityDays)
+                renderTeacherRow(teacherObj, uniqueDays, quantityDays, extraDays)
             );
         }
 
@@ -106,18 +108,17 @@ export default function Start(){
             <table>
                 <thead>
                     <tr>
-                        <th colSpan={quantityDays + 1}></th>
+                        <th colSpan={6} rowSpan={2}></th>
                         {uniqueDays.map((element, index) => (
-                            <th colSpan={quantityDays + 1} key={index}>{element}</th>
+                            <th colSpan={quantityDays + extraDays[quantityDays]} key={index}>{element}</th>
                         ))}
                     </tr>
-                </thead>
-                <tbody>
                     <tr>
-                        <td colSpan="6"></td>
                         {lessonsNum()}
                     </tr>
-                    {createTeachersRows(data, uniqueDays)}
+                </thead>
+                <tbody>          
+                    {createTeachersRows(data, uniqueDays, extraDays, quantityDays)}
                 </tbody>               
             </table> 
         )
@@ -135,134 +136,3 @@ export default function Start(){
 
 
 
-/*
-    onClick={() => getResult()}
-
-
-    function createTable(data){
-
-        const uniqueDays = [...new Set(data.map(element => element.data)];
-        const lessonArray = [1 урок, 2 урок, 3 урок, 4 урок, 5 урок, 6 урок];
-        const quantityDays = uniqueDays.length;
-
-        const uniqueTeachers = [...new Set(data.map(element => element.teacher))]
-
-        function lessonsNum(){
-            let result = [];
-            for (let i = 0; i < quantityDays; i++){
-                lessonArray.forEach((element, index) => {
-                    result.push(<td key={`${i}-${index}`}>{element}</td>);
-                })
-            return result;
-        }
-
-
-        function groupByTeachers(data) {
-
-            const grouped = data.reduce((accumulator, item) => {
-            
-                const teacher = item.teacher;             мы создаем объект accumulator{
-                                                                teacher: [{item}, {item}, ...]
-                                                                teacher: [{item}]      
-                                                         }
-                if (!accumulator[teacher]){
-                    accumulator[teacher] = [];
-                }
-                accumulator[teacher].push(item);
-                return accumulator;
-            },{})
-
-            return Object.entries(grouped).map(([teacher, lessons]) => ({
-                teacher,
-                lessons
-            }));
-
-        }
-
-Object.entries(grouped) превращает объект в массив пар:
-
-[
-  ["Иванов", [ ...уроки Иванова... ]],
-  ["Петров", [ ...уроки Петрова... ]]
-]
-
-    map(...) преобразует каждую пару в объект:
-
-{ teacher: "Иванов", lessons: [ ... ] }
-
-
-teachersLessons = groupByTeachers(data);
-    
-
-    teachersLessons.forEach(element, index) => {
-        <tr>element[index].teacher</tr>
-        element[index].lessons.forEach(obj, index)
-            
-                for (let i=1; i < 7; i++){
-
-        
-            }
-        
-        
-        
-    }
-
-
-        каждый элемент нашего массива объектов { teacher: "Иванов", lessons: [ {...}, {...} ] }
-            создаем строку <tr> с текстом свойства teacher
-            потом нам надо для этого teacher рассмотреть все его объекты в массиве свойства lessons
-                element[index].lessons.forEach(obj, index) - обращаемся к свойству lessons каждого учителя и для каждого мы должны добавлять новую ячейку таблицы, но
-                мы так сделать не можем, потому что мб нам придется создавать пустые ячейки, получается мы должны делать фиксированное кол-во проверок через два 
-                вложенных цикла
-                
-
-            for (let i = 0; i<5; i++) - дни недели, их пять
-                for (let j = 1; j<7; j++) - кол-во уроков
-                 {
-                    if (obj.day == uniqueDays[i]) && (obj.lessonnum = j){
-                        <td>obj.group obj.classroom</td>
-                    }
-                    else {
-                        <td></td>
-                    }
-                 }
- 
-
-                
-
-
-
-
-
-
-
-        return(
-            <table>
-                <thead>
-                    <tr>
-                        {uniqueDays.map(element => (
-                            <th key={element}>{element}</th>
-                        ))}
-                    </tr>
-                    <tr>
-                        {lessonNum()}
-                    </tr>
-                </thead>
-                <tbody>
-                    
-
-
-                </tbody>
-            </table> 
-
-        )
-    }
-
-
-
-
-
-
-
-
-*/ 

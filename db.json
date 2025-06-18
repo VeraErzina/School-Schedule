@@ -1,5 +1,5 @@
 {
-  "Teachers": [
+  "teachers": [
     {
       "id": "e012",
       "name": "Петрова Раиса Ивановна",
@@ -13,13 +13,13 @@
       "pair": false
     },
     {
-      "id": "1e2d",
-      "name": "Громова А. И.",
-      "maxHours": 45,
+      "id": "ce83",
+      "name": "Иванов Олег Петрович",
+      "maxHours": 46,
       "pair": false
     }
   ],
-  "Classes": [
+  "groups": [
     {
       "id": "1",
       "name": "2В"
@@ -27,13 +27,9 @@
     {
       "id": "2",
       "name": "2A"
-    },
-    {
-      "id": "ba2e",
-      "name": "4А"
     }
   ],
-  "Classroom": [
+  "classes": [
     {
       "id": "2",
       "name": "333"
@@ -89,108 +85,12 @@
       "id": "0eb6"
     },
     {
-      "day": "Вторник",
+      "day": "Понедельник",
       "group": "2A",
       "teacher": "Петрова Раиса Ивановна",
       "classroom": "333",
       "lessonnum": "1",
-      "id": "c843"
-    },
-    {
-      "day": "Вторник",
-      "group": "2B",
-      "teacher": "Петрова Раиса Ивановна",
-      "classroom": "505",
-      "lessonnum": "2",
-      "id": "a788"
-    },
-    {
-      "day": "Вторник",
-      "group": "2B",
-      "teacher": "Герцен Петр Игоревич",
-      "classroom": "505",
-      "lessonnum": "1",
-      "id": "eb51"
-    },
-    {
-      "day": "Вторник",
-      "group": "2A",
-      "teacher": "Герцен Петр Игоревич",
-      "classroom": "333",
-      "lessonnum": "2",
-      "id": "af3a"
-    },
-    {
-      "day": "Среда",
-      "group": "2A",
-      "teacher": "Петрова Раиса Ивановна",
-      "classroom": "333",
-      "lessonnum": "1",
-      "id": "5a16"
-    },
-    {
-      "day": "Среда",
-      "group": "2B",
-      "teacher": "Петрова Раиса Ивановна",
-      "classroom": "505",
-      "lessonnum": "2",
-      "id": "97eb"
-    },
-    {
-      "day": "Среда",
-      "group": "2B",
-      "teacher": "Герцен Петр Игоревич",
-      "classroom": "505",
-      "lessonnum": "1",
-      "id": "e484"
-    },
-    {
-      "day": "Среда",
-      "group": "2A",
-      "teacher": "Герцен Петр Игоревич",
-      "classroom": "333",
-      "lessonnum": "2",
-      "id": "42a3"
-    },
-    {
-      "day": "Четверг",
-      "group": "2A",
-      "teacher": "Петрова Раиса Ивановна",
-      "classroom": "333",
-      "lessonnum": "1",
-      "id": "728f"
-    },
-    {
-      "day": "Четверг",
-      "group": "2B",
-      "teacher": "Петрова Раиса Ивановна",
-      "classroom": "505",
-      "lessonnum": "2",
-      "id": "8297"
-    },
-    {
-      "day": "Четверг",
-      "group": "2B",
-      "teacher": "Герцен Петр Игоревич",
-      "classroom": "505",
-      "lessonnum": "1",
-      "id": "cfb9"
-    },
-    {
-      "day": "Четверг",
-      "group": "2A",
-      "teacher": "Герцен Петр Игоревич",
-      "classroom": "333",
-      "lessonnum": "2",
-      "id": "fc6a"
-    },
-    {
-      "day": "Пятница",
-      "group": "2A",
-      "teacher": "Петрова Раиса Ивановна",
-      "classroom": "333",
-      "lessonnum": "1",
-      "id": "7e01"
+      "id": "82cc"
     },
     {
       "day": "Пятница",
@@ -198,23 +98,23 @@
       "teacher": "Петрова Раиса Ивановна",
       "classroom": "505",
       "lessonnum": "2",
-      "id": "6aa5"
+      "id": "8c46"
     },
     {
-      "day": "Пятница",
-      "group": "2B",
-      "teacher": "Герцен Петр Игоревич",
-      "classroom": "505",
-      "lessonnum": "1",
-      "id": "07d7"
+      "day": "Четверг",
+      "group": "2Б",
+      "teacher": "Федоров Олег Григорьевич",
+      "classroom": "456",
+      "lessonnum": "2",
+      "id": "2a39"
     },
     {
-      "day": "Пятница",
+      "day": "Вторник",
       "group": "2A",
       "teacher": "Герцен Петр Игоревич",
       "classroom": "333",
       "lessonnum": "2",
-      "id": "9429"
+      "id": "0eb6"
     }
   ]
 }

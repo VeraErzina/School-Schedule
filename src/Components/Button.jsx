@@ -10,12 +10,12 @@ export default function Button({name, type, index}){
     const [value, setValue] = useState("");
     const [pairId, setPairId] = useState(null);
     
-    const placeholderText = ['Иванова Елена Вячеславовна 30', '404', '3А']
+    const placeholderText = ['Иванова Е. А. 30', '404', '3А']
  
     function handleKeyDown(event){                          /*ОТПРАВЛЯЕМ НОВЫЙ ОБЪЕКТ НА СЕРВЕР И ОБНОВЛЯЕМ СПИСОК*/
         if (event.key === 'Enter'){
             const newData = addNewData(value, type)
-            fetch(`http://localhost:3001/${type}`, {
+            fetch(`http://localhost:8080/lesssched/${type}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,6 +31,7 @@ export default function Button({name, type, index}){
             .then( () => {
                 setValue("");
                 getData();
+                console.log("отправили данные на сервер:", data);
             })
             .catch(error => console.error("Ошибка при отправке:", error))           
         }
@@ -64,20 +65,23 @@ export default function Button({name, type, index}){
 
 
     function getData(){                                        /*ПОЛУЧЕНИЕ ДАННЫХ С СЕРВЕРА*/ 
-        fetch(`http://localhost:3001/${type}`)
+        fetch(`http://localhost:8080/lesssched/${type}`)
         .then((response) => {
         if (!response.ok) {
             throw new Error("Сервер вернул Ошибку!");
         }
         return response.json();
         })
-        .then((data) => setData(data))
+        .then((data) => {
+            setData(data);
+            console.log("запросили список с сервера:", data);
+        })
         .catch(error => console.error("Ошибка:", error.message))
     }
 
 
     function deleteData(id, type) {                              /*УДАЛЕНИЕ ЭЛЕМЕНТА*/
-        fetch(`http://localhost:3001/${type}/${id}`, {
+        fetch(`http://localhost:8080/lesssched/${type}/${id}`, {
         method: "DELETE"    
     })
         .then(response => {
@@ -88,6 +92,9 @@ export default function Button({name, type, index}){
         })
         .then( () => {
             getData();    
+        })
+        .then( () => {
+            console.log("функция удаления, данные до удаления:", data);
         })
         .catch(error =>{
             console.error("Mistake", error);    
@@ -107,7 +114,7 @@ export default function Button({name, type, index}){
 
 
     function sendPairToServer(id1, id2){
-        fetch(`http://localhost:3001/teachers/${id1}`, {
+        fetch(`http://localhost:8080/lesssched/${id1}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(id2),
