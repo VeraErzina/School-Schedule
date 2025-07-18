@@ -1,0 +1,72 @@
+
+
+.button-menu {
+  background: transparent;
+  border: var(--button-color, #000);
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.menu{
+  background: rgb(187, 176, 147);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 80px;    
+  height: 100vh;
+  display: flex;    
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  transition: width 2s;
+
+}
+
+.menu-list {
+  list-style: none;
+  opacity: 0;
+  transition: opacity 1s;
+  margin-top: 100px;
+}
+
+.menu-list li{
+  margin-top: 30px;
+  font-size: large;
+}
+
+.menu[aria-expanded="true"] .menu-list {
+  opacity: 1;
+}
+
+.button-menu {
+  --button-color: black;
+}
+
+.button-menu .hamburger{
+    transition: translate 1s, rotate 1s;
+}
+
+.button-menu[aria-expanded="true"] .hamburger {
+  translate: 5px -5px;
+  rotate: 0.125turn;
+}
+
+.button-menu .line {
+  transition: 1s;
+  stroke-dasharray: 60 31 60 300;
+}
+
+.button-menu[aria-expanded="true"] .line {
+  stroke-dasharray: 60 105 60 300;
+  stroke-dashoffset: -90;
+}
+
+.menu[aria-expanded="true"] {
+  width: 300px;
+}
+
+

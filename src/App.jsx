@@ -1,18 +1,12 @@
 import './App.css'
-import Button from './Components/Button.jsx'
+import Menu from './Components/Menu.jsx'
 import Start from './Components/Start.jsx'
 import StopServer from './Components/StopServer.jsx'
 
 function App() {
   return(
     <>
-    <header>
-    <Button name="Учителя" type="teachers" index="0"/>
-    <Button name="Кабинеты" type="classes" index="1"/>
-    <Button name="Классы" type="groups" index="2"/> 
-    </header>
-    <Start/>
-    <StopServer/>
+    <Menu/>
     </>
   )
 }
