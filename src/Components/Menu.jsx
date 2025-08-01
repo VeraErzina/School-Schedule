@@ -1,11 +1,28 @@
 import {useState} from 'react'
 import "./Menu.css"
 import Element from './Element.jsx'
+import DefaultForm from "./DefaultForm.jsx"
+import TeacherForm from "./TeacherForm.jsx"
+import "./Form.css"
+import PlanForm from "./PlanForm.jsx"
 
 export default function Menu(){
 
     const [isOpen, setIsOpen] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    const [formType, setFormType] = useState(null);
+    const [activeHost, setActiveHost] = useState(null);
+    const [isPlanOpen, setIsPlanOpen] = useState(false);
+
+    function openForm(host) {
+        setFormType(host === "teachers" || host === "groups" ? host : "default");
+        setActiveHost(host);
+    }
+
+    function openPlan() {
+        console.log("План открыт");
+        setIsPlanOpen(true);
+    }
 
     function openMenu(){        
         if (!isOpen) {
@@ -21,6 +38,7 @@ export default function Menu(){
     }
  
     return(
+        <>
         <div className="menu" aria-expanded={isOpen}>
             <button className="button-menu" aria-controls="primary-navigation" aria-expanded={isOpen} onClick={openMenu}>
             <svg 
@@ -42,13 +60,18 @@ export default function Menu(){
         
         {showMenu && 
             <ul className="menu-list">
-                <li><Element name="Учителя"/></li>
-                <li><Element name="Кабинеты"/></li>
-                <li><Element name="Классы"/></li>
-                <li><Element name="Дни недели"/></li>
-                <li><Element name="Список уроков"/></li>
+                <li><Element name="Учителя" host="teachers" onOpenForm={openForm}/></li>
+                <li><Element name="Кабинеты" host="classes" onOpenForm={openForm}/></li>
+                <li><Element name="Классы" host="groups" onOpenForm={openForm} onOpenPlan={openPlan}/></li>
+                <li><Element name="Дни недели" host="days" onOpenForm={openForm}/></li>
+                <li><Element name="Список уроков" host="lessonslist" onOpenForm={openForm}/></li>
             </ul>
         }
+
         </div>
+        {formType === "default" && activeHost && <DefaultForm host={activeHost} />}
+        {formType === "teachers" && activeHost && <TeacherForm host={activeHost} />}
+        {isPlanOpen && <PlanForm/>}
+        </>
     )
 }

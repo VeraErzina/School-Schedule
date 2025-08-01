@@ -38,6 +38,7 @@
   font-size: large;
 }
 
+
 .menu[aria-expanded="true"] .menu-list {
   opacity: 1;
 }

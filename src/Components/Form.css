@@ -1,0 +1,99 @@
+.form{
+    position: fixed;
+    width: 700px;
+    height: 500px;
+    right: 300px;
+    top: 200px;
+    background-color: beige;
+    border: 1px solid black;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: left;
+    align-items: center;
+}
+
+.input-name {
+    height: 30px;
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.add-button{
+    background-color: rgb(128, 192, 76);
+    width: 100px;
+    height: 50px;
+    grid-column-start: 4;
+    grid-row-start: 8;
+}
+
+.select-discipline{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 3;
+}
+
+.select-day{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+}
+
+.p-day{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}    
+
+.p-discipline{
+    grid-column-start: 1;
+    grid-row-start: 3;
+}
+
+.p-hours{
+    grid-column-start: 3;
+    grid-row-start: 3;
+    padding-left: 20px;
+}
+
+.input-hours{
+    grid-column-start: 4;
+    grid-row-start: 3;
+    width: 100%;
+}
+
+.add-discipline{
+    width: 100px;
+    height: 50px;
+    background-color: rgb(89, 219, 158);
+    grid-column-start: 1;
+    grid-row-start: 4;
+}
+
+.discipline-block{
+    grid-column-start: 1;
+    grid-row-start: 3;
+}    
+
+.p-planname{
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.input-plan{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+}
+
+.lessonplan{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+}
+
+.p-lessonsplan{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}

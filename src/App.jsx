@@ -1,7 +1,5 @@
 import './App.css'
 import Menu from './Components/Menu.jsx'
-import Start from './Components/Start.jsx'
-import StopServer from './Components/StopServer.jsx'
 
 function App() {
   return(
