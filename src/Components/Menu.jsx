@@ -3,6 +3,7 @@ import "./Menu.css"
 import Element from './Element.jsx'
 import DefaultForm from "./DefaultForm.jsx"
 import TeacherForm from "./TeacherForm.jsx"
+import GroupsForm from "./GroupsForm.jsx"
 import "./Form.css"
 import PlanForm from "./PlanForm.jsx"
 
@@ -12,16 +13,24 @@ export default function Menu(){
     const [showMenu, setShowMenu] = useState(false);
     const [formType, setFormType] = useState(null);
     const [activeHost, setActiveHost] = useState(null);
-    const [isPlanOpen, setIsPlanOpen] = useState(false);
+    const [refreshKey, setRefreshKey] = useState(0);
+    const [selectedData, setSelectedData] = useState(null);
 
-    function openForm(host) {
-        setFormType(host === "teachers" || host === "groups" ? host : "default");
+    function triggerRefresh() {
+        setRefreshKey(prev => prev + 1); // просто увеличиваем число
+    }
+
+    function openForm(host, element) {
+        console.log("openForm called:", { host, element });
+        setSelectedData(element);
+        setFormType(["teachers", "groups", "lessonsplan"].includes(host) ? host : "default");
         setActiveHost(host);
     }
 
-    function openPlan() {
-        console.log("План открыт");
-        setIsPlanOpen(true);
+    function closeForm() {
+        setFormType(null);
+        setActiveHost(null);
+        setSelectedData(null);
     }
 
     function openMenu(){        
@@ -60,18 +69,20 @@ export default function Menu(){
         
         {showMenu && 
             <ul className="menu-list">
-                <li><Element name="Учителя" host="teachers" onOpenForm={openForm}/></li>
-                <li><Element name="Кабинеты" host="classes" onOpenForm={openForm}/></li>
-                <li><Element name="Классы" host="groups" onOpenForm={openForm} onOpenPlan={openPlan}/></li>
-                <li><Element name="Дни недели" host="days" onOpenForm={openForm}/></li>
-                <li><Element name="Список уроков" host="lessonslist" onOpenForm={openForm}/></li>
+                <li><Element name="Учителя" host="teachers" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
+                <li><Element name="Кабинеты" host="classes" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
+                <li><Element name="Классы" host="groups" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
+                <li><Element name="Дни недели" host="days" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
+                <li><Element name="Список уроков" host="lessonslist" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
+                <li><Element name="План уроков" host="lessonsplan" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
             </ul>
         }
 
         </div>
-        {formType === "default" && activeHost && <DefaultForm host={activeHost} />}
-        {formType === "teachers" && activeHost && <TeacherForm host={activeHost} />}
-        {isPlanOpen && <PlanForm/>}
-        </>
+        {formType === "default" && activeHost && <DefaultForm host={activeHost} onUpdateList={triggerRefresh} onCloseForm={closeForm} toEdit={selectedData}/>}
+        {formType === "teachers" && activeHost && <TeacherForm host={activeHost}  onUpdateList={triggerRefresh} onCloseForm={closeForm} toEdit={selectedData}/>}
+        {formType === "lessonsplan" && activeHost && <PlanForm host={activeHost}  onUpdateList={triggerRefresh} onCloseForm={closeForm} toEdit={selectedData}/>}
+        {formType === "groups" && activeHost && <GroupsForm host={activeHost}  onUpdateList={triggerRefresh} onCloseForm={closeForm} toEdit={selectedData}/>}
+        </> 
     )
 }

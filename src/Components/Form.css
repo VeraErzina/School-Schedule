@@ -27,6 +27,7 @@
     height: 50px;
     grid-column-start: 4;
     grid-row-start: 8;
+    margin-left: 150px;
 }
 
 .select-discipline{
@@ -69,6 +70,7 @@
     background-color: rgb(89, 219, 158);
     grid-column-start: 1;
     grid-row-start: 4;
+    margin-top: 5px;
 }
 
 .discipline-block{
@@ -89,11 +91,81 @@
 
 .lessonplan{
     grid-column-start: 3;
-    grid-column-end: 4;
+    grid-column-end: 5;
     grid-row-start: 2;
 }
 
 .p-lessonsplan{
     grid-column-start: 1;
     grid-row-start: 2;
+}
+
+.p-priority{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.priority{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+
+.p-group-lessonplan{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.select-planlesson{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+
+.p-pair{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+}
+
+.p-group-lesson{
+    grid-column-start: 1;
+    grid-row-start: 4;
+}
+
+.select-lesson{
+    grid-column-start: 2;
+    grid-row-start: 4;
+}
+
+.p-group-teacher{
+    grid-column-start: 1;
+    grid-row-start: 5;
+}
+
+.checkbox-groups{
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 5;
+}
+
+.groups-button{
+    width: 100px;
+    height: 60px;
+    grid-column-start: 1;
+    grid-row-start: 6;
+}
+
+.delete-button{
+    width: 120px;
+    height: 50px;
+    background-color: rgba(233, 208, 67, 0.842);
+    grid-column-start: 1;
+    grid-row-start: 8;
+}
+
+.close-button{
+    width: 40px;
+    height: 40px;
+    background-color: rgb(255, 0, 0);
+    grid-column-start: 5;
+    grid-row-start: 1;
 }

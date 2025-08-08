@@ -1,26 +1,108 @@
 {
   "teachers": [
     {
-      "id": "e012",
-      "name": "Петрова Раиса Ивановна"
+      "id": "bbf5",
+      "name": "Костина М. И.",
+      "discipline": [
+        {
+          "lesson": "18a7",
+          "hours": "34",
+          "classes": "4fb1"
+        }
+      ],
+      "methodicalDay": "779d"
     },
     {
-      "id": "b0b7",
-      "name": "Герцен Петр Игоревич"
+      "id": "20a0",
+      "name": "Кириллова А. Б.",
+      "discipline": [
+        {
+          "lesson": "5497",
+          "hours": "12",
+          "classes": "caa0"
+        }
+      ],
+      "methodicalDay": "779d"
     },
     {
-      "id": "ce83",
-      "name": "Иванов Олег Петрович"
+      "id": "23a1",
+      "name": "Пышная М. А.",
+      "discipline": [
+        {
+          "lesson": "1395",
+          "hours": "5",
+          "classes": "4fb1"
+        },
+        {
+          "lesson": "18a7",
+          "hours": "45",
+          "classes": "4fb1"
+        }
+      ],
+      "methodicalDay": ""
+    },
+    {
+      "id": "0911",
+      "name": "Шолохов И. А",
+      "discipline": [
+        {
+          "lesson": "4298",
+          "hours": "43",
+          "classes": "4fb1"
+        }
+      ],
+      "methodicalDay": "a8f2"
     }
   ],
   "groups": [
     {
-      "id": "1",
-      "name": "2В"
-    },
-    {
       "id": "2",
       "name": "2A"
+    },
+    {
+      "id": "0b18",
+      "name": "6А",
+      "lessonsplan": "e4e7",
+      "lessonspair": [
+        {
+          "lesson": "18a7",
+          "teacher": [
+            "c29c",
+            "c500"
+          ]
+        },
+        {
+          "lesson": "5497",
+          "teacher": [
+            "20a0"
+          ]
+        },
+        {
+          "lesson": "1395",
+          "teacher": [
+            "23a1"
+          ]
+        }
+      ]
+    }
+  ],
+  "lessonsplan": [
+    {
+      "id": "e4e7",
+      "name": "5-9 классы",
+      "lessons": [
+        "18a7"
+      ]
+    },
+    {
+      "id": "a5f0",
+      "name": "10 rkfcc",
+      "lessons": [
+        "18a7",
+        "5497",
+        "1395",
+        "4298"
+      ]
     }
   ],
   "classes": [
@@ -39,22 +121,6 @@
     {
       "id": "d3b4",
       "name": "505"
-    },
-    {
-      "id": "4979",
-      "name": "302"
-    },
-    {
-      "id": "438d",
-      "name": "312"
-    },
-    {
-      "id": "b5de",
-      "name": "404"
-    },
-    {
-      "id": "46a3",
-      "name": "590"
     }
   ],
   "days": [
@@ -75,46 +141,30 @@
       "name": "Четверг"
     },
     {
-      "id": "70bd",
+      "id": "e2c3",
       "name": "Пятница"
-    },
-    {
-      "id": "6c47",
-      "name": "Суббота"
     }
   ],
   "lessonslist": [
     {
-      "id": "1",
-      "name": "Математика"
+      "id": "18a7",
+      "name": "Русский язык",
+      "priority": "1"
     },
     {
-      "id": "2",
-      "name": "Русский язык"
+      "id": "5497",
+      "name": "Математика",
+      "priority": "2"
     },
     {
-      "id": "57c6",
-      "name": "География"
+      "id": "1395",
+      "name": "Физика",
+      "priority": "3"
     },
     {
-      "id": "c8ff",
-      "name": "Физика"
-    },
-    {
-      "id": "e7b7",
-      "name": "Химия"
-    },
-    {
-      "id": "14f4",
-      "name": "Физкультура"
-    },
-    {
-      "id": "82cd",
-      "name": "Английский язык"
-    },
-    {
-      "id": "7af0",
-      "name": "Практика"
+      "id": "4298",
+      "name": "География",
+      "priority": "4"
     }
   ],
   "lesssched": [

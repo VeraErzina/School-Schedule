@@ -12,6 +12,22 @@ export default function TeacherForm(props){
     const [disciplines, setDisciplines] = useState([
          { lesson: "", hours: "", classes: "" }
     ]);
+    const toEdit = props.toEdit || null;
+
+    useEffect(() => {
+        if (toEdit) {
+            setValue(toEdit.name || "");
+            setSelectedDay(toEdit.methodicalDay || "");
+            setDisciplines(toEdit.discipline.length > 0 
+                ? toEdit.discipline 
+                : [{ lesson: "", hours: "", classes: "" }]
+            );
+        } else {
+            setValue("");
+            setSelectedDay("");
+            setDisciplines([{ lesson: "", hours: "", classes: "" }]);
+        }
+    }, [toEdit]);
 
     useEffect(() => {
         fetch('http://localhost:3001/lessonslist')
@@ -43,10 +59,6 @@ export default function TeacherForm(props){
         .catch(err => console.error(err));
     }, []);
 
-    function handleChangeDay(e) {
-    setSelectedDay(e.target.value);
-    }
-
     function handleDisciplineChange(index, field, value) {
         const updated = [...disciplines];
         updated[index][field] = value;
@@ -57,6 +69,25 @@ export default function TeacherForm(props){
     function addDiscipline() {
         console.log("Добавление новой дисциплины"); 
         setDisciplines([...disciplines, { lesson: "", hours: "", classes: "" }]);
+    }
+
+    function deleteData(id){
+
+        fetch(`http://localhost:3001/teachers/${id}`, {
+            method: "DELETE",
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Ошибка при удалении");
+            }
+            
+        })
+        .then(() => {
+            console.log(`Элемент с id ${id} удален`);
+            props.onUpdateList();  
+            props.onCloseForm(); 
+        })
+        .catch((error) => console.error("Ошибка:", error))
     }
 
     return(
@@ -90,7 +121,7 @@ export default function TeacherForm(props){
                     <select
                         className="select-discipline"
                         value={disc.lesson}
-                        onChange={(e) => handleDisciplineChange(index, "lesson", Number(e.target.value))}
+                        onChange={(e) => handleDisciplineChange(index, "lesson", e.target.value)}
                         required
                     >
                         <option value="" disabled>Выберите дисциплину</option>
@@ -114,7 +145,7 @@ export default function TeacherForm(props){
                         value={disc.classes}
                         onChange={(e) => handleDisciplineChange(index, "classes", e.target.value)}
                     >
-                        <option value="" disabled>Выберите кабинет</option>
+                        <option value="">Выберите кабинет</option>
                         {classes.map(classes => (
                             <option key={classes.id} value={classes.id}>{classes.name}</option>
                         ))}
@@ -122,14 +153,27 @@ export default function TeacherForm(props){
                 </div>
             ))}
 
-            <button className="add-discipline" type="button" onClick={addDiscipline}>добавить дисциплину</button>
+            <button className="add-discipline" type="button" onClick={addDiscipline}>добавить еще дисциплину</button>
 
             
             <AddButton 
                 host={props.host} 
                 name={value} 
                 methodical={selectedDay} 
-                disciplines={disciplines}/>
+                disciplines={disciplines}
+                onUpdateList={props.onUpdateList} 
+                onCloseForm={props.onCloseForm}
+                toEdit={toEdit}/>
+
+            {toEdit && (
+                <button type="button" className="delete-button" onClick={()=>{deleteData(toEdit.id)}}>
+                    Удалить учителя
+                </button>
+            )}
+
+            <button type="button" onClick={props.onCloseForm} className="close-button">
+                &#x2715;
+            </button>
         </div>
     )
 }
