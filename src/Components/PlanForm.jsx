@@ -100,6 +100,7 @@ export default function PlanForm(props){
             host={props.host}
             name={value}
             lessons={selectedLesson}
+            toEdit={toEdit}
         />
 
         {toEdit && (

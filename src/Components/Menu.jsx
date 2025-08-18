@@ -5,7 +5,9 @@ import DefaultForm from "./DefaultForm.jsx"
 import TeacherForm from "./TeacherForm.jsx"
 import GroupsForm from "./GroupsForm.jsx"
 import "./Form.css"
+import StopServer from "./StopServer.jsx"
 import PlanForm from "./PlanForm.jsx"
+import Start from "./Start.jsx"
 
 export default function Menu(){
 
@@ -75,6 +77,8 @@ export default function Menu(){
                 <li><Element name="Дни недели" host="days" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
                 <li><Element name="Список уроков" host="lessonslist" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
                 <li><Element name="План уроков" host="lessonsplan" onOpenForm={openForm} onCloseForm={closeForm} refreshKey={refreshKey} triggerRefresh={triggerRefresh}/></li>
+                <li><StopServer/></li>
+                <li><Start/></li>
             </ul>
         }
 

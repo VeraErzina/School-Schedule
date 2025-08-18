@@ -19,7 +19,7 @@
     "@eslint/js": "^9.22.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^4.7.0",
     "electron": "^36.4.0",
     "electron-builder": "^26.0.12",
     "eslint": "^9.22.0",
@@ -27,7 +27,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "json-server": "^1.0.0-beta.3",
-    "vite": "^6.3.1"
+    "vite": "^6.3.5"
   },
   "build": {
     "appId": "com.example.myapp",

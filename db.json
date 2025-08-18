@@ -40,50 +40,12 @@
         }
       ],
       "methodicalDay": ""
-    },
-    {
-      "id": "0911",
-      "name": "Шолохов И. А",
-      "discipline": [
-        {
-          "lesson": "4298",
-          "hours": "43",
-          "classes": "4fb1"
-        }
-      ],
-      "methodicalDay": "a8f2"
     }
   ],
   "groups": [
     {
       "id": "2",
       "name": "2A"
-    },
-    {
-      "id": "0b18",
-      "name": "6А",
-      "lessonsplan": "e4e7",
-      "lessonspair": [
-        {
-          "lesson": "18a7",
-          "teacher": [
-            "c29c",
-            "c500"
-          ]
-        },
-        {
-          "lesson": "5497",
-          "teacher": [
-            "20a0"
-          ]
-        },
-        {
-          "lesson": "1395",
-          "teacher": [
-            "23a1"
-          ]
-        }
-      ]
     }
   ],
   "lessonsplan": [
@@ -92,16 +54,6 @@
       "name": "5-9 классы",
       "lessons": [
         "18a7"
-      ]
-    },
-    {
-      "id": "a5f0",
-      "name": "10 rkfcc",
-      "lessons": [
-        "18a7",
-        "5497",
-        "1395",
-        "4298"
       ]
     }
   ],
@@ -117,10 +69,6 @@
     {
       "id": "4fb1",
       "name": "394"
-    },
-    {
-      "id": "d3b4",
-      "name": "505"
     }
   ],
   "days": [
@@ -139,10 +87,6 @@
     {
       "id": "779d",
       "name": "Четверг"
-    },
-    {
-      "id": "e2c3",
-      "name": "Пятница"
     }
   ],
   "lessonslist": [
@@ -155,16 +99,6 @@
       "id": "5497",
       "name": "Математика",
       "priority": "2"
-    },
-    {
-      "id": "1395",
-      "name": "Физика",
-      "priority": "3"
-    },
-    {
-      "id": "4298",
-      "name": "География",
-      "priority": "4"
     }
   ],
   "lesssched": [
@@ -239,6 +173,22 @@
       "classroom": "333",
       "lessonnum": "2",
       "id": "0eb6"
+    },
+    {
+      "day": "Среда",
+      "group": "2A",
+      "teacher": "Петрова Раиса Ивановна",
+      "classroom": "333",
+      "lessonnum": "1",
+      "id": "82cc"
+    },
+    {
+      "day": "Среда",
+      "group": "2A",
+      "teacher": "Ольга П. А.",
+      "classroom": "333",
+      "lessonnum": "2",
+      "id": "82cc"
     }
   ]
 }

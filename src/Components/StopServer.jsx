@@ -1,4 +1,4 @@
-import "./Button.css"
+import "./Menu.css"
 
 export default function StopServer(){
     function stop(){
@@ -15,6 +15,6 @@ export default function StopServer(){
     }   
 
     return(
-        <button className="stop-server" onClick={() => stop()}>Остановить сервер</button>
+        <div className="stop" onClick={() => stop()}>Остановить сервер</div>
     )
 }

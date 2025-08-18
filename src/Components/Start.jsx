@@ -1,13 +1,13 @@
-import "./Button.css";
 import { useState } from "react";
 import "./Start.css";
+import "./Menu.css";
 
 export default function Start(){
 
     const [tableData, setTableData] = useState(null);
 
     function getResult(){                                                       /*Отправляем серверу запрос на выполнение команды и получаем данные*/ 
-        fetch("http://localhost:8080/lesssched")
+        fetch("http://localhost:3001/lesssched")
         .then(response => {
             if(!response.ok) {
                 throw new Error("Ошибка запроса!")
@@ -25,9 +25,10 @@ export default function Start(){
         
     }
 
-    function createTable(data){     
-                                                                                                    /*Создаем таблицу с расписанием*/ 
-        const uniqueDays = [...new Set(data.map(element => element.day))];
+    function createTable(data){                                                 /*Создаем таблицу с расписанием*/ 
+
+        const weekOrder = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];                                                                                            
+        const uniqueDays = [...new Set(data.map(element => element.day))].sort((a, b) => weekOrder.indexOf(a) - weekOrder.indexOf(b));
         const lessonArray = ["1 урок", "2 урок", "3 урок", "4 урок", "5 урок", "6 урок"];
         const quantityDays = uniqueDays.length;
         const extraDays = [0, 5, 4, 3, 2, 1, 0];
@@ -105,7 +106,8 @@ export default function Start(){
 
 
         return(
-            <table>
+            <div className="final-table">
+            <table >
                 <thead>
                     <tr>
                         <th colSpan={6} rowSpan={2}></th>
@@ -120,7 +122,11 @@ export default function Start(){
                 <tbody>          
                     {createTeachersRows(data, uniqueDays, extraDays, quantityDays)}
                 </tbody>               
-            </table> 
+            </table>
+            <button onClick={() => window.print()}>
+            🖨 Печать таблицы
+            </button>
+            </div>
         )
     }
 
@@ -128,7 +134,7 @@ export default function Start(){
 
     return(
         <>
-        <button className="button-start" onClick={() => getResult()}>СОСТАВИТЬ РАСПИСАНИЕ</button>
+        <div className="start" onClick={() => getResult()}>Составить расписание</div>
         {tableData && createTable(tableData)}
         </>
     )

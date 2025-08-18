@@ -1,9 +1,35 @@
 table{
-    width: 80%;
-    border: 1px solid black;
+    border-collapse: collapse;
+    width: max-content;   
+    min-width: 100%; 
 }
 
 th, td{
     border: 1px solid black;
     text-align: center;
+    font-size: small;
 }
+
+.final-table{
+    position: fixed;
+    right: 10px;
+    left: 305px;
+    top: 5px;
+    overflow: auto;
+}
+
+@media print {
+    .final-table {
+      position: static !important; /* убираем fixed */
+      overflow: visible !important; /* показываем весь контент */
+      width: 100% !important;
+    }
+  
+    body > *:not(.final-table) {
+      display: none !important; /* скрываем все остальное на странице */
+    }
+  
+    .final-table tr {
+      page-break-inside: avoid;
+    }
+  }
