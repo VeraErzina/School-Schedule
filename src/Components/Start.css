@@ -19,17 +19,38 @@ th, td{
 }
 
 @media print {
-    .final-table {
-      position: static !important; /* убираем fixed */
-      overflow: visible !important; /* показываем весь контент */
-      width: 100% !important;
-    }
-  
-    body > *:not(.final-table) {
-      display: none !important; /* скрываем все остальное на странице */
-    }
-  
-    .final-table tr {
-      page-break-inside: avoid;
-    }
+  body * {
+    visibility: hidden !important;
   }
+
+  .final-table, .final-table * {
+    visibility: visible !important;
+  }
+
+  .final-table {
+    position: static !important;   /* никаких fixed/absolute */
+    overflow: visible !important;  /* чтобы вся таблица вошла */
+    inset: auto !important;        /* сброс left/right/top */
+    margin: 0 !important;          /* убираем внешние отступы */
+    padding: 0 !important;
+    transform: none !important;    /* вдруг есть */
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-before: auto;
+    page-break-after: auto;
+    page-break-inside: auto;
+  }
+
+  /* Чтобы строки не резались */
+  .final-table tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  @page {
+    size: landscape;   /* альбомная ориентация */
+    margin: 10mm;      /* поля */
+  }
+
+  .final-table { outline: 2px solid red !important; }
+}

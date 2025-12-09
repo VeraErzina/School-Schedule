@@ -12,14 +12,17 @@ export default function DefaultForm(props){
     const list = {
         days: "день недели",
         classes: "кабинет",
-        lessonslist: "урок"
+        disciplines: "урок"
     }
 
     useEffect(() => {
             if (toEdit) {
                 setValue(toEdit.name || "");
-                if (toEdit.priopity){
+                if (toEdit.priority){
                 setPriorityValue(toEdit.priority || "");
+                }
+                if (toEdit.maxLessons){
+                setPriorityValue(toEdit.maxLessons || "");
                 }
             } else {
                 setValue("");
@@ -29,14 +32,14 @@ export default function DefaultForm(props){
 
     function deleteData(data){
         console.log("deleteData вызвано с данными:", data);
-        fetch(`http://localhost:3001/${props.host}/${data.id}`, {
+        fetch(`http://localhost:8080/lesssched/${props.host}/${data.id}`, {
             method: "DELETE",
         })
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Ошибка при удалении");
             }
-                
+             
         })
         .then(() => {
             console.log(`Элемент с id ${data.id} удален`);
@@ -48,16 +51,16 @@ export default function DefaultForm(props){
     
 
     return(
-        <div className="form form-default">
+        <div className="form form-default" ref={props.formRef}>
             <p>Введите {list[props.host]}:</p>
             <input
                 type="text"
                 required
-                placeholder="хуй"
+                placeholder=""
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
             />
-            {props.host == "lessonslist" &&
+            {props.host == "disciplines" &&
                 <>
                 <p className="p-priority">Приоритет предмета:</p>
                 <input
@@ -68,7 +71,19 @@ export default function DefaultForm(props){
                     onChange={(e) => setPriorityValue(e.target.value)}
                 /></>
             }
-            <AddButton 
+            {props.host == "days" &&
+                <>
+                <p className="p-priority">Кол-во уроков:</p>
+                <input
+                    className="priority"
+                    type="text"
+                    placeholder="введите число"
+                    value={priorityValue}
+                    onChange={(e) => setPriorityValue(e.target.value)}
+                /></>
+            }
+            <AddButton                   
+                {...(toEdit?.id && { id: toEdit.id })}
                 host={props.host} 
                 name={value} 
                 priority={priorityValue} 

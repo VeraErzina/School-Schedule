@@ -39,6 +39,11 @@ export default App
     }
   }
     
-  "type": "commonjs",*/
+  "type": "commonjs",
+  
+  npm run electron-dev // запускает vite сервер (localhost:5173) ждёт, пока он запустится, открывает Electron окно с живым React-приложением
+  npm run electron-pack // vite build — пересобирает React-приложение в dist, electron-builder build --win — создаёт установщик .exe с новым кодом
+  
+  */
 
  

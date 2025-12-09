@@ -4,43 +4,77 @@ import {useState, useEffect} from 'react'
 
 export default function TeacherForm(props){
 
-    const [lessons, setLessons] = useState([]);
-    const [classes, setClasses] = useState([]);
-    const [day, setDay] = useState([]);
+    const [disciplines, setDisciplines] = useState([]); // для выпадающего списка "Дисциплина"
+    const [classes, setClasses] = useState([]); // для "Кабинет"
+    const [groups, setGroups] = useState([]); // для "Класс"
+    const [days, setDays] = useState([]);
+
     const [value, setValue] = useState("");
     const [selectedDay, setSelectedDay] = useState("");
-    const [disciplines, setDisciplines] = useState([
-         { lesson: "", hours: "", classes: "" }
-    ]);
+    const [teacherDisciplines, setTeacherDisciplines] = useState(
+        Array.from({ length: 15 }, () => ({discipline: "", classroom: "", group: "", hours: "", subgroup: ""})
+    ));
+
     const toEdit = props.toEdit || null;
 
     useEffect(() => {
+        async function editData(teacherID) {
+        try {
+            const response = await fetch(`http://localhost:8080/lesssched/teachersplan/${teacherID}`);
+            if (!response.ok) {
+                throw new Error("Ошибка получения данных плана учителя");
+            }
+
+        // сервер возвращает массив объектов teachersplan
+        const data = await response.json();
+
+        // Преобразуем в формат для состояния
+        const loadedDisciplines = data.map((item) => ({
+        teachersplanID: item.id,
+        discipline: item.disciplineID || "",
+        classroom: item.classroomID || "",
+        group: item.groupID || "",
+        hours: item.hours || "",
+        subgroup: item.subgroup || ""
+        }));
+
+        // Обновляем состояние
+        setTeacherDisciplines(() => {
+            const updated = Array.from({ length: 15 }, (_, i) => (
+            loadedDisciplines[i] || { discipline: "", classroom: "", group: "", hours: "", subgroup: ""}
+            ));
+            return updated;
+        });
+        } catch (error) {
+            console.error("Ошибка при загрузке данных:", error);
+        }
+        }
+
         if (toEdit) {
             setValue(toEdit.name || "");
             setSelectedDay(toEdit.methodicalDay || "");
-            setDisciplines(toEdit.discipline.length > 0 
-                ? toEdit.discipline 
-                : [{ lesson: "", hours: "", classes: "" }]
-            );
+        if (Array.isArray(toEdit.plan) && toEdit.plan.length > 0) {
+            editData(toEdit.id);
+        }
         } else {
             setValue("");
             setSelectedDay("");
-            setDisciplines([{ lesson: "", hours: "", classes: "" }]);
         }
     }, [toEdit]);
 
+
     useEffect(() => {
-        fetch('http://localhost:3001/lessonslist')
+        fetch('http://localhost:8080/lesssched/disciplines')
         .then(response => {
             if (!response.ok) throw new Error('Ошибка загрузки дисциплин');
             return response.json();
         })
-        .then(data => setLessons(data))
+        .then(data => setDisciplines(data))
         .catch(err => console.error(err));
     }, []); 
 
     useEffect(() => {
-        fetch('http://localhost:3001/classes')
+        fetch('http://localhost:8080/lesssched/classes')
         .then(response => {
             if (!response.ok) throw new Error('Ошибка загрузки дисциплин');
             return response.json();
@@ -50,30 +84,45 @@ export default function TeacherForm(props){
     }, []); 
     
     useEffect(() => {
-        fetch('http://localhost:3001/days')
+        fetch('http://localhost:8080/lesssched/days')
         .then(response => {
             if (!response.ok) throw new Error('Ошибка загрузки дисциплин');
             return response.json();
         })
-        .then(data => setDay(data))
+        .then(data => setDays(data))
         .catch(err => console.error(err));
     }, []);
 
-    function handleDisciplineChange(index, field, value) {
-        const updated = [...disciplines];
+    useEffect(() => {
+        fetch('http://localhost:8080/lesssched/groups')
+        .then(response => {
+            if (!response.ok) throw new Error('Ошибка загрузки дисциплин');
+            return response.json();
+        })
+        .then(data => setGroups(data))
+        .catch(err => console.error(err));
+    }, []);
+
+    function handleChange(index, field, value) {
+        const updated = [...teacherDisciplines];
         updated[index][field] = value;
-        console.log(updated);
-        setDisciplines(updated);
+        setTeacherDisciplines(updated);
+        console.log(teacherDisciplines);
     }
 
-    function addDiscipline() {
-        console.log("Добавление новой дисциплины"); 
-        setDisciplines([...disciplines, { lesson: "", hours: "", classes: "" }]);
-    }
+
+
+  // Добавляем новый блок дисциплины
+    /*function addDiscipline() {
+        setTeacherDisciplines([
+        ...teacherDisciplines,
+        { discipline: "", classroom: "", group: "", hours: "" },
+        ]);
+    }*/
 
     function deleteData(id){
 
-        fetch(`http://localhost:3001/teachers/${id}`, {
+        fetch(`http://localhost:8080/lesssched/teachers/${id}`, {
             method: "DELETE",
         })
         .then((response) => {
@@ -91,13 +140,13 @@ export default function TeacherForm(props){
     }
 
     return(
-        <div className="form form-teacher">
+        <div className="form form-teacher" ref={props.formRef}>
             <p>Введите ФИО учителя:</p>
             <input
                 className="name"
                 type="text"
                 required
-                placeholder="хуй учителя"
+                placeholder="Иванов И. И."
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
             />
@@ -108,62 +157,98 @@ export default function TeacherForm(props){
                 onChange={(e) => setSelectedDay(e.target.value)}
             >
                 <option value="" disabled>Выберите методический день</option>
-                {day.map(day => (
+                {days.map(day => (
                     <option key={day.id} value={day.id}>
                     {day.name}
                 </option>
                 ))}
             </select> 
 
-            {disciplines.map((disc, index) => (
-                <div key={index} className="discipline-block">
-                    <p className="p-discipline">Дисциплина:</p>
-                    <select
-                        className="select-discipline"
-                        value={disc.lesson}
-                        onChange={(e) => handleDisciplineChange(index, "lesson", e.target.value)}
-                        required
-                    >
-                        <option value="" disabled>Выберите дисциплину</option>
-                        {lessons.map(lesson => (
-                            <option key={lesson.id} value={lesson.id}>{lesson.name}</option>
-                        ))}
-                    </select>
+            {teacherDisciplines.map((block, index) => (
+                <div key={index} className={`discipline-block block-${index}`}>
+                <p className="p-discipline">Дисциплина:</p>
+                <select
+                className="select-discipline"
+                value={block.discipline}
+                onChange={(e) =>
+                    handleChange(index, "discipline", e.target.value)
+                }
+                required
+                >
+                <option value="" disabled>
+                Выберите дисциплину
+                </option>
+                {disciplines.map((d) => (
+                    <option key={d.id} value={d.id}>
+                    {d.name}
+                    </option>
+                ))}
+                </select>
 
-                    <p className="p-hours">Кол-во часов:</p>
-                    <input
-                        className="input-hours"
-                        type="text"
-                        placeholder="Количество часов"
-                        value={disc.hours}
-                        onChange={(e) => handleDisciplineChange(index, "hours", e.target.value)}
-                    />
+                <p className="p-class">Класс:</p>
+                <select
+                    className="select-group"
+                    value={block.group}
+                    onChange={(e) =>
+                        handleChange(index, "group", e.target.value)
+                    }
+                >   
+                <option value="">Выберите класс</option>
+                {groups.map((cl) => (
+                    <option key={cl.id} value={cl.id}>
+                    {cl.name}
+                    </option>
+                ))}
+                </select>
 
-                    <p>Кабинет:</p>
-                    <select
-                        className="select-class"
-                        value={disc.classes}
-                        onChange={(e) => handleDisciplineChange(index, "classes", e.target.value)}
-                    >
-                        <option value="">Выберите кабинет</option>
-                        {classes.map(classes => (
-                            <option key={classes.id} value={classes.id}>{classes.name}</option>
-                        ))}
-                    </select>
+                <p className="p-hours">Кол-во часов:</p>
+                <input
+                    className="input-hours"
+                    type="number"
+                    placeholder="Количество часов"
+                    value={block.hours}
+                    onChange={(e) => handleChange(index, "hours", e.target.value)}
+                />
+
+                <p>Кабинет:</p>
+                <select
+                    className="select-classroom"
+                    value={block.classroom}
+                    onChange={(e) => handleChange(index, "classroom", e.target.value)}
+                >
+                <option value="">Выберите кабинет</option>
+                {classes.map((cab) => (
+                    <option key={cab.id} value={cab.id}>
+                    {cab.name}
+                    </option>
+                ))}
+                </select>
+
+                <p className="p-subgroup">Кол-во подгрупп:</p>
+                <input
+                    className="input-subgroup"
+                    type="number"
+                    placeholder="введите число больше 1"
+                    value={block.subgroup}
+                    onChange={(e) => handleChange(index, "subgroup", e.target.value)}
+                />
                 </div>
-            ))}
+            ))} 
 
-            <button className="add-discipline" type="button" onClick={addDiscipline}>добавить еще дисциплину</button>
+
+            {/*<button className="add-discipline" type="button" onClick={addDiscipline}>добавить еще дисциплину</button>*/}
 
             
             <AddButton 
-                host={props.host} 
-                name={value} 
-                methodical={selectedDay} 
-                disciplines={disciplines}
-                onUpdateList={props.onUpdateList} 
+                {...(toEdit?.id && { id: toEdit.id })}
+                host={props.host}
+                name={value}
+                methodical={selectedDay}
+                teachersplan={teacherDisciplines}
+                onUpdateList={props.onUpdateList}
                 onCloseForm={props.onCloseForm}
-                toEdit={toEdit}/>
+                toEdit={toEdit}
+            />
 
             {toEdit && (
                 <button type="button" className="delete-button" onClick={()=>{deleteData(toEdit.id)}}>

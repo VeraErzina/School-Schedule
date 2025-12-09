@@ -5,7 +5,7 @@ export default function DeleteButton(props){
     function deleteData(e, id){
         e.preventDefault();
 
-        fetch(`http://localhost:3001/${props.host}`, {
+        fetch(`http://localhost:8080/lesssched/${props.host}`, {
             method: "DELETE",
         })
         .then((response) => {

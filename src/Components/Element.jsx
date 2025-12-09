@@ -10,7 +10,7 @@ export default function Element(props){
 
 
     function getData() {                                  // получаем данные с сервера
-        fetch(`http://localhost:3001/${props.host}`)
+        fetch(`http://localhost:8080/lesssched/${props.host}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error ("Ошибка получаения данных");
@@ -29,24 +29,24 @@ export default function Element(props){
         setIsOpen(prev => !prev);
     }
 
-    useEffect(() => {                                 // обработчик клика вне меню
+    useEffect(() => {
+    function handleClickOutside(event) {
+      const clickedOutsideMenu =
+        menuRef.current && !menuRef.current.contains(event.target);
+      const clickedOutsideForm =
+        !props.formRef?.current || !props.formRef.current.contains(event.target);
 
-        function clickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsOpen(false);
-            };
-        }
+      // Закрываем меню, если кликнули вне меню и вне формы
+      if (clickedOutsideMenu && clickedOutsideForm) {
+        setIsOpen(false);
+      }
+    }
 
-        if (isOpen) {
-            document.addEventListener("mousedown", clickOutside);
-        }
-
-        return () => {
-            document.removeEventListener("mousedown", clickOutside);
-        }
-
-
-    },[isOpen])
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [isOpen, props.formRef]);
 
 
     return(

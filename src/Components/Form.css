@@ -1,17 +1,50 @@
+@media (max-width: 1280px) {
+  :root {
+    --form-width: 780px;
+    --form-height: 650px;
+    --font-size: 15px;
+    --padding: 5px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --form-width: 1000px;
+    --form-height: 800px;
+    --font-size: 20px;
+    --padding: 10px;
+  }
+}
+
 .form{
     position: fixed;
-    width: 700px;
-    height: 500px;
-    right: 300px;
-    top: 200px;
+    width: var(--form-width);
+    height: var(--form-height);
+    padding: var(--padding);
+    right: 150px;
+    top: 50px;
+    z-index: 1;
     background-color: beige;
-    border: 1px solid black;
-    padding: 10px;
+    border: 1px solid black; 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
     justify-items: left;
     align-items: center;
+}
+
+.form-teacher{
+    max-height: 90vh; /* чтобы не выходило за экран */
+    overflow-y: auto; /* вертикальный скролл */
+    scrollbar-gutter: stable both-edges;
+    padding: var(--padding);
+}
+
+.form-plan{
+    max-height: 90vh; /* чтобы не выходило за экран */
+    overflow-y: auto; /* вертикальный скролл */
+    scrollbar-gutter: stable both-edges;
+    padding: var(--padding);
 }
 
 .input-name {
@@ -21,13 +54,25 @@
     grid-column-end: 4;
 }
 
+.input-grade {
+    height: 30px;
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.p-grade{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
 .add-button{
     background-color: rgb(128, 192, 76);
-    width: 100px;
-    height: 50px;
+    width: calc(var(--form-width)/10);
+    height: calc(var(--form-height)/16);
     grid-column-start: 4;
     grid-row-start: 8;
-    margin-left: 150px;
+    justify-self: right;
 }
 
 .select-discipline{
@@ -55,7 +100,6 @@
 .p-hours{
     grid-column-start: 3;
     grid-row-start: 3;
-    padding-left: 20px;
 }
 
 .input-hours{
@@ -69,14 +113,84 @@
     height: 50px;
     background-color: rgb(89, 219, 158);
     grid-column-start: 1;
-    grid-row-start: 4;
-    margin-top: 5px;
+    grid-row-start: -1;
 }
 
 .discipline-block{
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background: #f9f9f9;
+}    
+
+.block-0{
     grid-column-start: 1;
     grid-row-start: 3;
 }    
+
+.block-1{
+    grid-column-start: 2;
+    grid-row-start: 3;
+}    
+
+.block-2{
+    grid-column-start: 3;
+    grid-row-start: 3;
+}    
+
+.block-3{
+    grid-column-start: 4;
+    grid-row-start: 3;
+}    
+.block-4{
+    grid-column-start: 1;
+    grid-row-start: 4;
+}    
+.block-5{
+    grid-column-start: 2;
+    grid-row-start: 4;
+}    
+.block-6{
+    grid-column-start: 3;
+    grid-row-start: 4;
+}    
+.block-7{
+    grid-column-start: 4;
+    grid-row-start: 4;
+}    
+.block-8{
+    grid-column-start: 1;
+    grid-row-start: 5;
+}    
+.block-9{
+    grid-column-start: 2;
+    grid-row-start: 5;
+}    
+.block-10{
+    grid-column-start: 3;
+    grid-row-start: 5;
+}    
+.block-11{
+    grid-column-start: 4;
+    grid-row-start: 5;
+}    
+.block-12{
+    grid-column-start: 1;
+    grid-row-start: 6;
+}    
+.block-13{
+    grid-column-start: 2;
+    grid-row-start: 6;
+} 
+.block-14{
+    grid-column-start: 3;
+    grid-row-start: 6;
+} 
+.block-15{
+    grid-column-start: 4;
+    grid-row-start: 6;
+} 
 
 .p-planname{
     grid-column-start: 1;
@@ -155,17 +269,18 @@
 }
 
 .delete-button{
-    width: 120px;
-    height: 50px;
+    width: var(calc(--form-width)/10);
+    height: var(calc(--form-height)/16);
     background-color: rgba(233, 208, 67, 0.842);
     grid-column-start: 1;
     grid-row-start: 8;
 }
 
 .close-button{
-    width: 40px;
-    height: 40px;
+    width: calc(var(--form-width)/25);
+    height: calc(var(--form-height)/20);
     background-color: rgb(255, 0, 0);
-    grid-column-start: 5;
+    grid-column-start: 4;
     grid-row-start: 1;
+    justify-self: right;
 }

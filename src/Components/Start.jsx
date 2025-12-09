@@ -7,7 +7,7 @@ export default function Start(){
     const [tableData, setTableData] = useState(null);
 
     function getResult(){                                                       /*Отправляем серверу запрос на выполнение команды и получаем данные*/ 
-        fetch("http://localhost:3001/lesssched")
+        fetch("http://localhost:8080/lesssched")
         .then(response => {
             if(!response.ok) {
                 throw new Error("Ошибка запроса!")
@@ -64,6 +64,7 @@ export default function Start(){
 
         function renderTeacherRow(teacherObj, uniqueDays, quantityDays, extraDays) {
             const cells = [];
+            const classroomSet = new Set;
 
             for (let i = 0; i < uniqueDays.length; i++) {
                 for (let j = 1; j <= 6; j++) {
@@ -76,9 +77,10 @@ export default function Start(){
                     if (match) {
                         cells.push(
                             <td key={`${teacherObj.teacher}-${i}-${j}`}>
-                                {`${match.group} ${match.classroom}`}
+                                {`${match.group}`}
                             </td>
                         );
+                        classroomSet.add(match.classroom);
                     } else {
                         cells.push(
                             <td key={`${teacherObj.teacher}-${i}-${j}`}></td>
@@ -89,7 +91,11 @@ export default function Start(){
 
             return (
                 <tr key={teacherObj.teacher}>
-                    <td colSpan={quantityDays + extraDays[quantityDays]}>{teacherObj.teacher}</td>
+                    <td colSpan={quantityDays + extraDays[quantityDays]-1}>{teacherObj.teacher}</td>
+                    <td> {classroomSet.size > 0 
+                        ? Array.from(classroomSet).join(' / ')
+                        : ''}
+                    </td>
                     {cells}
                 </tr>
             );
@@ -103,6 +109,26 @@ export default function Start(){
             );
         }
 
+        function printTable() {
+        const table = document.querySelector(".final-table").innerHTML;
+        const newWin = window.open("");
+        newWin.document.write(`
+        <html>
+        <head>
+            <title>Расписание</title>
+            <style>
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid black; padding: 4px; text-align: center; }
+            tr { page-break-inside: avoid; }
+            @page { size: A4 landscape; margin: 10mm; }
+            </style>
+        </head>
+        <body>${table}</body>
+        </html>
+        `);
+        newWin.document.close();
+        newWin.print();
+        }
 
 
         return(
@@ -123,13 +149,12 @@ export default function Start(){
                     {createTeachersRows(data, uniqueDays, extraDays, quantityDays)}
                 </tbody>               
             </table>
-            <button onClick={() => window.print()}>
+            <button onClick={printTable}>
             🖨 Печать таблицы
             </button>
             </div>
         )
     }
-
 
 
     return(

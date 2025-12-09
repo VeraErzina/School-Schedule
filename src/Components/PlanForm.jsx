@@ -3,40 +3,60 @@ import AddButton from "./AddButton.jsx"
 import {useState, useEffect} from 'react'
 
 export default function PlanForm(props){
-    const [selectedLesson, setSelectedLesson] = useState([]);
+
     const [data, setData] = useState([]);
-    const [value, setValue] = useState();
+    const [value, setValue] = useState("");
+    const [grade, setGrade] = useState("");
+    const [planelements, setPlanelements] = useState(
+        Array.from({ length: 15 }, () => ({ discipline: "", hours: "" }))
+    );
     const toEdit = props.toEdit || null;
 
-    function handleCheckboxChange(e) {
-        const id = e.target.value;
-        setSelectedLesson(prev =>
-            prev.includes(id)
-            ? prev.filter(item => item !== id)
-            : [...prev, id]
-        );
-    }
-
-    const selectedNames = data
-        .filter(item => selectedLesson.includes(String(item.id)))
-        .map(item => item.name);
-
-
-
     useEffect(() => {
+        async function editData(planID) {
+            try {
+                const response = await fetch(`http://localhost:8080/lesssched/planelements/${planID}`);
+                if (!response.ok) {
+                throw new Error("Ошибка получения данных плана");
+                }
+
+            const data = await response.json();
+
+            const loadedDisciplines = data.map((item) => ({
+            id: item.id,
+            discipline: item.disciplineID || "",
+            hours: item.hours || ""
+            }));
+
+            setPlanelements(() => {
+                const updated = Array.from({ length: 15 }, (_, i) => (
+                loadedDisciplines[i] || { discipline: "", hours: "" }
+                ));
+                return updated;
+            });
+
+            console.log("Данные дисциплин загружены:", loadedDisciplines);
+            } catch (error) {
+            console.error("Ошибка при загрузке данных дисциплин:", error);
+            }
+        }
+
         if (toEdit) {
             setValue(toEdit.name || "");
-            setSelectedLesson(toEdit.lessons || "");
+            setGrade(toEdit.grade || "");
+        if (Array.isArray(toEdit.plan) && toEdit.plan.length > 0) {
+            editData(toEdit.id);
+        }
         } else {
             setValue("");
-            setSelectedLesson("");
+            setGrade("");
         }
     }, [toEdit]);
 
 
 
     useEffect(() => {                                  
-        fetch(`http://localhost:3001/lessonslist`)
+        fetch(`http://localhost:8080/lesssched/disciplines`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error ("Ошибка получаения данных");
@@ -50,7 +70,7 @@ export default function PlanForm(props){
 
     function deleteData(id){
 
-        fetch(`http://localhost:3001/lessonsplan/${id}`, {
+        fetch(`http://localhost:8080/lesssched/planes/${id}`, {
             method: "DELETE",
         })
         .then((response) => {
@@ -67,39 +87,75 @@ export default function PlanForm(props){
         .catch((error) => console.error("Ошибка:", error))
     }
 
+    function handleChange(index, field, value) {
+        const updated = [...planelements];
+        updated[index][field] = value;
+        setPlanelements(updated);
+        console.log(planelements);
+    }
+
     return (
-    <div className="form">
+    <div className="form form-plan" ref={props.formRef}>
         <p className="p-planname">Название плана</p>
         <input
             type="text"
             className="input-plan"
             required
-            placeholder="название"
+            placeholder="5-9 классы"
             value={value}
             onChange={(e) => setValue(e.target.value)}
         />
-        <div className="lessonplan">
-            {data.map((item) => (
-                <label key={item.id}>
-                <input
-                    type="checkbox"
-                    value={item.id}
-                    checked={selectedLesson.includes(item.id)}
-                    onChange={handleCheckboxChange}
-                />
-                {item.name}
-                </label>
+        <p className="p-grade">Максимальное количество уроков в день:</p>
+        <input
+            type="number"
+            className="input-grade"
+            required
+            placeholder="6"
+            value={grade}
+            onChange={(e) => setGrade(e.target.value)}
+        />
+         {planelements.map((block, index) => (
+            <div key={index} className={`discipline-block block-${index}`}>
+            <p className="p-discipline">Дисциплина:</p>
+            <select
+                className="select-discipline"
+                value={block.discipline}
+                onChange={(e) => {
+                    handleChange(index, "discipline", e.target.value)
+                }}
+                required
+            >
+                <option value="" disabled>Выберите дисциплину</option>
+                {data.map((d) => (
+                <option key={d.id} value={d.id}>{d.name}</option>
             ))}
-        </div>
+            </select>
 
-        <p className="p-lessonsplan">Выбрано: {selectedNames.join(", ")}</p>
+            <p className="p-hours">Кол-во часов:</p>
+            <input
+            type="number"
+            min="1"
+            className="input-hours"
+            value={block.hours || ""}
+            onChange={(e) => {
+                const updated = [...planelements];
+                updated[index].hours = e.target.value === "" ? "" : parseInt(e.target.value);
+                setPlanelements(updated);
+            }}
+            placeholder="Количество часов"
+            required
+            />
+            </div>
+        ))}
 
         <AddButton 
-            onUpdateList={props.onUpdateList} 
+            {...(toEdit?.id && { id: toEdit.id })}
+            onUpdateList={props.onUpdateList}
             onCloseForm={props.onCloseForm}
             host={props.host}
             name={value}
-            lessons={selectedLesson}
+            Grade={grade}
+            planelements={planelements} // [{id, hours}]
             toEdit={toEdit}
         />
 
