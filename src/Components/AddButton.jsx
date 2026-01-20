@@ -12,6 +12,7 @@ export default function AddButton(props){
       }
         // Собираем все нужные данные из props
       const {
+        admin,
         host,
         id,
         name,
@@ -25,6 +26,7 @@ export default function AddButton(props){
 
       // Формируем тело запроса: включаем только непустые поля
       const body = {
+        ...(admin && {admin}),
         ...(id && {id}),
         ...(name && { name }),
         ...(Grade && { Grade }),
@@ -52,8 +54,46 @@ export default function AddButton(props){
 
         // 🔹 Сохраняем каждый блок teachersplan и собираем их ID
           console.log("dataToSave:", teachersplan)
-          for (const plan of teachersplan) {
-            if (!plan.disciplineID) continue;
+
+          const dataToSave = teachersplan
+            .filter(
+              (block) => block.discipline && block.group && block.classroom && block.hours
+            )
+            .map((block) => ({
+              id: block.id,
+              teacherID: id,
+              disciplineID: parseInt(block.discipline),
+              groupID: parseInt(block.group),
+              classroomID: parseInt(block.classroom),
+              hours: parseInt(block.hours),
+              subgroup: parseInt(block.subgroup)
+            }));
+
+          console.log("dataToSave:", dataToSave)
+            for (const plan of dataToSave) {
+              if(plan.id){
+              fetch(`http://localhost:8080/lesssched/teachersplan/${plan.id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(plan)
+              })
+              .then(data => {
+                console.log("Данные успешно отредактированны:", data)
+              })}
+              else {
+                fetch("http://localhost:8080/lesssched/teachersplan", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(plan)
+                })
+                .then(data => {
+                console.log("Данные успешно сохранены:", data)
+                })
+              }
+          
+
+          {/*for (const plan of teachersplan) {
+            if (!plan.discipline) continue;
             if (plan.id){
             fetch(`http://localhost:8080/lesssched/teachersplan/${plan.id}`, {
             method: "PUT",
@@ -65,7 +105,7 @@ export default function AddButton(props){
               groupID: parseInt(plan.group),
               classroomID: parseInt(plan.classroom),
               hours: parseInt(plan.hours),
-              subgroup: parseInt(plan.subgroup)
+              subgroup: parseInt(plan.subgroup) 
             })
             })
             .then(data => {
@@ -90,6 +130,7 @@ export default function AddButton(props){
             })
             }
           }
+}*/}      }
         }
         if (host == "planes"){
 
@@ -105,6 +146,9 @@ export default function AddButton(props){
                 disciplineID: parseInt(el.discipline),
                 hours: parseInt(el.hours)
               })
+              })
+              .then(data => {
+                console.log("Данные обновлены:", data);
               });
             }
             else {
@@ -116,6 +160,9 @@ export default function AddButton(props){
                 disciplineID: parseInt(el.discipline),
                 hours: parseInt(el.hours)
               })
+              })
+              .then(data => {
+                console.log("Данные обновлены:", data);
               });
             }
           }
@@ -125,6 +172,9 @@ export default function AddButton(props){
       })
       .catch(err => console.error("Ошибка PUT-запроса:", err));
     }
+
+
+
 
     async function sendToServer(e) {
     e.preventDefault();
@@ -144,6 +194,7 @@ export default function AddButton(props){
         body: JSON.stringify({
           name: props.name,
           methodicalDay: props.methodical,
+          admin: props.admin,
           plan: []
         })
       });
@@ -164,7 +215,8 @@ export default function AddButton(props){
           disciplineID: parseInt(block.discipline),
           groupID: parseInt(block.group),
           classroomID: parseInt(block.classroom),
-          hours: parseInt(block.hours)
+          hours: parseInt(block.hours),
+          subgroup: parseInt(block.subgroup)
         }));
 
       // 🔹 Сохраняем каждый блок teachersplan и собираем их ID
@@ -200,7 +252,7 @@ export default function AddButton(props){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
         name: props.name,
-        Garde: props.Grade,
+        grade: props.grade,
         plan: [] // временно пустой
         })
         });

@@ -29,15 +29,16 @@ export default function Start(){
 
         const weekOrder = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];                                                                                            
         const uniqueDays = [...new Set(data.map(element => element.day))].sort((a, b) => weekOrder.indexOf(a) - weekOrder.indexOf(b));
-        const lessonArray = ["1 урок", "2 урок", "3 урок", "4 урок", "5 урок", "6 урок"];
+        const lessonArray = [...new Set(data.map(element => element.lessonnum))].sort((a, b) => a - b);
         const quantityDays = uniqueDays.length;
+        const quantityLessons = lessonArray.length;
         const extraDays = [0, 5, 4, 3, 2, 1, 0];
         
         function lessonsNum(){
             let result = [];
             for (let i = 0; i < quantityDays; i++){
                 lessonArray.forEach((element, index) => {
-                    result.push(<td key={`${i}-${index}`}>{element}</td>);
+                    result.push(<td key={`${i}-${index}`}>{element} урок</td>);
                 })}
             return result;
         }
@@ -62,12 +63,12 @@ export default function Start(){
 
 
 
-        function renderTeacherRow(teacherObj, uniqueDays, quantityDays, extraDays) {
+        function renderTeacherRow(teacherObj, uniqueDays, quantityDays, extraDays, quantityLessons) {
             const cells = [];
             const classroomSet = new Set;
 
             for (let i = 0; i < uniqueDays.length; i++) {
-                for (let j = 1; j <= 6; j++) {
+                for (let j = 1; j <= quantityLessons; j++) {
                     const match = teacherObj.lessons.find(
                         (obj) =>
                         obj.day === uniqueDays[i] &&
@@ -102,10 +103,10 @@ export default function Start(){
         }
 
 
-        function createTeachersRows(data, uniqueDays, extraDays, quantityDays) {
+        function createTeachersRows(data, uniqueDays, extraDays, quantityDays, quantityLessons) {
             const groupedTeachers = groupByTeachers(data);
             return groupedTeachers.map((teacherObj) =>
-                renderTeacherRow(teacherObj, uniqueDays, quantityDays, extraDays)
+                renderTeacherRow(teacherObj, uniqueDays, quantityDays, extraDays, quantityLessons)
             );
         }
 
@@ -138,7 +139,7 @@ export default function Start(){
                     <tr>
                         <th colSpan={6} rowSpan={2}></th>
                         {uniqueDays.map((element, index) => (
-                            <th colSpan={quantityDays + extraDays[quantityDays]} key={index}>{element}</th>
+                            <th colSpan={quantityLessons} key={index}>{element}</th>
                         ))}
                     </tr>
                     <tr>
@@ -146,7 +147,7 @@ export default function Start(){
                     </tr>
                 </thead>
                 <tbody>          
-                    {createTeachersRows(data, uniqueDays, extraDays, quantityDays)}
+                    {createTeachersRows(data, uniqueDays, extraDays, quantityDays, quantityLessons)}
                 </tbody>               
             </table>
             <button onClick={printTable}>

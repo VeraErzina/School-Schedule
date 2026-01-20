@@ -8,11 +8,12 @@ export default function TeacherForm(props){
     const [classes, setClasses] = useState([]); // для "Кабинет"
     const [groups, setGroups] = useState([]); // для "Класс"
     const [days, setDays] = useState([]);
+    const [admin, setAdmin] = useState(false);
 
     const [value, setValue] = useState("");
     const [selectedDay, setSelectedDay] = useState("");
     const [teacherDisciplines, setTeacherDisciplines] = useState(
-        Array.from({ length: 15 }, () => ({discipline: "", classroom: "", group: "", hours: "", subgroup: ""})
+        Array.from({ length: 18 }, () => ({discipline: "", classroom: "", group: "", hours: "", subgroup: ""})
     ));
 
     const toEdit = props.toEdit || null;
@@ -30,7 +31,7 @@ export default function TeacherForm(props){
 
         // Преобразуем в формат для состояния
         const loadedDisciplines = data.map((item) => ({
-        teachersplanID: item.id,
+        id: item.id,
         discipline: item.disciplineID || "",
         classroom: item.classroomID || "",
         group: item.groupID || "",
@@ -40,7 +41,7 @@ export default function TeacherForm(props){
 
         // Обновляем состояние
         setTeacherDisciplines(() => {
-            const updated = Array.from({ length: 15 }, (_, i) => (
+            const updated = Array.from({ length: 18 }, (_, i) => (
             loadedDisciplines[i] || { discipline: "", classroom: "", group: "", hours: "", subgroup: ""}
             ));
             return updated;
@@ -53,6 +54,7 @@ export default function TeacherForm(props){
         if (toEdit) {
             setValue(toEdit.name || "");
             setSelectedDay(toEdit.methodicalDay || "");
+            setAdmin(toEdit.admin || false);
         if (Array.isArray(toEdit.plan) && toEdit.plan.length > 0) {
             editData(toEdit.id);
         }
@@ -156,13 +158,26 @@ export default function TeacherForm(props){
                 value={selectedDay} 
                 onChange={(e) => setSelectedDay(e.target.value)}
             >
-                <option value="" disabled>Выберите методический день</option>
+                <option value="" >Выберите методический день</option>
                 {days.map(day => (
                     <option key={day.id} value={day.id}>
                     {day.name}
                 </option>
                 ))}
             </select> 
+
+            <div className="p-admin">
+                <p>Завуч:</p>
+                <label>
+                    <input
+                    className="checkbox-admin"
+                    type="checkbox"
+                    checked={admin}
+                    onChange={() => setAdmin(!admin)}
+                    />
+                    Да
+                </label>
+            </div>
 
             {teacherDisciplines.map((block, index) => (
                 <div key={index} className={`discipline-block block-${index}`}>
@@ -189,6 +204,7 @@ export default function TeacherForm(props){
                 <select
                     className="select-group"
                     value={block.group}
+                    required
                     onChange={(e) =>
                         handleChange(index, "group", e.target.value)
                     }
@@ -206,6 +222,7 @@ export default function TeacherForm(props){
                     className="input-hours"
                     type="number"
                     placeholder="Количество часов"
+                    required
                     value={block.hours}
                     onChange={(e) => handleChange(index, "hours", e.target.value)}
                 />
@@ -247,6 +264,7 @@ export default function TeacherForm(props){
                 teachersplan={teacherDisciplines}
                 onUpdateList={props.onUpdateList}
                 onCloseForm={props.onCloseForm}
+                admin={admin}
                 toEdit={toEdit}
             />
 

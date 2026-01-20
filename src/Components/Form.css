@@ -28,7 +28,7 @@
     border: 1px solid black; 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: repeat(9, 1fr);
     justify-items: left;
     align-items: center;
 }
@@ -54,6 +54,22 @@
     grid-column-end: 4;
 }
 
+.p-admin{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+/*.checkbox-admin{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+}*/
+
 .input-grade {
     height: 30px;
     width: 100%;
@@ -71,7 +87,7 @@
     width: calc(var(--form-width)/10);
     height: calc(var(--form-height)/16);
     grid-column-start: 4;
-    grid-row-start: 8;
+    grid-row-start: 9;
     justify-self: right;
 }
 
@@ -126,70 +142,85 @@
 
 .block-0{
     grid-column-start: 1;
-    grid-row-start: 3;
+    grid-row-start: 4;
 }    
 
 .block-1{
     grid-column-start: 2;
-    grid-row-start: 3;
+    grid-row-start: 4;
 }    
 
 .block-2{
     grid-column-start: 3;
-    grid-row-start: 3;
+    grid-row-start: 4;
 }    
 
 .block-3{
     grid-column-start: 4;
-    grid-row-start: 3;
+    grid-row-start: 4;
 }    
 .block-4{
     grid-column-start: 1;
-    grid-row-start: 4;
+    grid-row-start: 5;
 }    
 .block-5{
     grid-column-start: 2;
-    grid-row-start: 4;
+    grid-row-start: 5;
 }    
 .block-6{
     grid-column-start: 3;
-    grid-row-start: 4;
+    grid-row-start: 5;
 }    
 .block-7{
     grid-column-start: 4;
-    grid-row-start: 4;
+    grid-row-start: 5;
 }    
 .block-8{
     grid-column-start: 1;
-    grid-row-start: 5;
+    grid-row-start: 6;
 }    
 .block-9{
     grid-column-start: 2;
-    grid-row-start: 5;
+    grid-row-start: 6;
 }    
 .block-10{
     grid-column-start: 3;
-    grid-row-start: 5;
+    grid-row-start: 6;
 }    
 .block-11{
     grid-column-start: 4;
-    grid-row-start: 5;
+    grid-row-start: 6;
 }    
 .block-12{
     grid-column-start: 1;
-    grid-row-start: 6;
+    grid-row-start: 7;
 }    
 .block-13{
     grid-column-start: 2;
-    grid-row-start: 6;
+    grid-row-start: 7;
 } 
 .block-14{
     grid-column-start: 3;
-    grid-row-start: 6;
+    grid-row-start: 7;
 } 
 .block-15{
     grid-column-start: 4;
-    grid-row-start: 6;
+    grid-row-start: 7;
+} 
+
+.block-16{
+    grid-column-start: 1;
+    grid-row-start: 8;
+} 
+
+.block-17{
+    grid-column-start: 2;
+    grid-row-start: 8;
+} 
+
+.block-18{
+    grid-column-start: 3;
+    grid-row-start: 8;
 } 
 
 .p-planname{

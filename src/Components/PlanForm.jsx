@@ -13,6 +13,7 @@ export default function PlanForm(props){
     const toEdit = props.toEdit || null;
 
     useEffect(() => {
+        console.log(toEdit);
         async function editData(planID) {
             try {
                 const response = await fetch(`http://localhost:8080/lesssched/planelements/${planID}`);
@@ -154,7 +155,7 @@ export default function PlanForm(props){
             onCloseForm={props.onCloseForm}
             host={props.host}
             name={value}
-            Grade={grade}
+            grade={grade}
             planelements={planelements} // [{id, hours}]
             toEdit={toEdit}
         />
