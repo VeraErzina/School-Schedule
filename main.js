@@ -3,15 +3,15 @@ const path = require('path');
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 1500,
-    height: 900,
+    show: false,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
     },
   
   });
-  
+  win.maximize(); // разворачивает на весь экран
+  win.show();  
   win.webContents.openDevTools()
   win.loadFile(path.join(__dirname, 'dist', 'index.html')); // Загрузка index.html из Vite-сборки
 }

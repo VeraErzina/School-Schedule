@@ -1,0 +1,317 @@
+@media (max-width: 1280px) {
+  :root {
+    --form-width: 780px;
+    --form-height: 650px;
+    --font-size: 15px;
+    --padding: 5px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --form-width: 1000px;
+    --form-height: 800px;
+    --font-size: 20px;
+    --padding: 10px;
+  }
+}
+
+.form{
+    position: fixed;
+    width: var(--form-width);
+    height: var(--form-height);
+    padding: var(--padding);
+    right: 150px;
+    top: 50px;
+    z-index: 1;
+    background-color: beige;
+    border: 1px solid black; 
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    justify-items: left;
+    align-items: center;
+}
+
+.form-teacher{
+    max-height: 90vh; /* чтобы не выходило за экран */
+    overflow-y: auto; /* вертикальный скролл */
+    scrollbar-gutter: stable both-edges;
+    padding: var(--padding);
+}
+
+.form-plan{
+    max-height: 90vh; /* чтобы не выходило за экран */
+    overflow-y: auto; /* вертикальный скролл */
+    scrollbar-gutter: stable both-edges;
+    padding: var(--padding);
+}
+
+.input-name {
+    height: 30px;
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.p-admin{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+/*.checkbox-admin{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+}*/
+
+.input-grade {
+    height: 30px;
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.p-grade{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.add-button{
+    background-color: rgb(128, 192, 76);
+    width: calc(var(--form-width)/10);
+    height: calc(var(--form-height)/16);
+    grid-column-start: 4;
+    grid-row-start: 9;
+    justify-self: right;
+}
+
+.select-discipline{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 3;
+}
+
+.select-day{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+}
+
+.p-day{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}    
+
+.p-discipline{
+    grid-column-start: 1;
+    grid-row-start: 3;
+}
+
+.p-hours{
+    grid-column-start: 3;
+    grid-row-start: 3;
+}
+
+.input-hours{
+    grid-column-start: 4;
+    grid-row-start: 3;
+    width: 100%;
+}
+
+.add-discipline{
+    width: 100px;
+    height: 50px;
+    background-color: rgb(89, 219, 158);
+    grid-column-start: 1;
+    grid-row-start: -1;
+}
+
+.discipline-block{
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background: #f9f9f9;
+}    
+
+.block-0{
+    grid-column-start: 1;
+    grid-row-start: 4;
+}    
+
+.block-1{
+    grid-column-start: 2;
+    grid-row-start: 4;
+}    
+
+.block-2{
+    grid-column-start: 3;
+    grid-row-start: 4;
+}    
+
+.block-3{
+    grid-column-start: 4;
+    grid-row-start: 4;
+}    
+.block-4{
+    grid-column-start: 1;
+    grid-row-start: 5;
+}    
+.block-5{
+    grid-column-start: 2;
+    grid-row-start: 5;
+}    
+.block-6{
+    grid-column-start: 3;
+    grid-row-start: 5;
+}    
+.block-7{
+    grid-column-start: 4;
+    grid-row-start: 5;
+}    
+.block-8{
+    grid-column-start: 1;
+    grid-row-start: 6;
+}    
+.block-9{
+    grid-column-start: 2;
+    grid-row-start: 6;
+}    
+.block-10{
+    grid-column-start: 3;
+    grid-row-start: 6;
+}    
+.block-11{
+    grid-column-start: 4;
+    grid-row-start: 6;
+}    
+.block-12{
+    grid-column-start: 1;
+    grid-row-start: 7;
+}    
+.block-13{
+    grid-column-start: 2;
+    grid-row-start: 7;
+} 
+.block-14{
+    grid-column-start: 3;
+    grid-row-start: 7;
+} 
+.block-15{
+    grid-column-start: 4;
+    grid-row-start: 7;
+} 
+
+.block-16{
+    grid-column-start: 1;
+    grid-row-start: 8;
+} 
+
+.block-17{
+    grid-column-start: 2;
+    grid-row-start: 8;
+} 
+
+.block-18{
+    grid-column-start: 3;
+    grid-row-start: 8;
+} 
+
+.p-planname{
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.input-plan{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+}
+
+.lessonplan{
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 2;
+}
+
+.p-lessonsplan{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.p-priority{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.priority{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+
+.p-group-lessonplan{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.select-planlesson{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+
+.p-pair{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+}
+
+.p-group-lesson{
+    grid-column-start: 1;
+    grid-row-start: 4;
+}
+
+.select-lesson{
+    grid-column-start: 2;
+    grid-row-start: 4;
+}
+
+.p-group-teacher{
+    grid-column-start: 1;
+    grid-row-start: 5;
+}
+
+.checkbox-groups{
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 5;
+}
+
+.groups-button{
+    width: 100px;
+    height: 60px;
+    grid-column-start: 1;
+    grid-row-start: 6;
+}
+
+.delete-button{
+    width: var(calc(--form-width)/10);
+    height: var(calc(--form-height)/16);
+    background-color: rgba(233, 208, 67, 0.842);
+    grid-column-start: 1;
+    grid-row-start: 8;
+}
+
+.close-button{
+    width: calc(var(--form-width)/25);
+    height: calc(var(--form-height)/20);
+    background-color: rgb(255, 0, 0);
+    grid-column-start: 4;
+    grid-row-start: 1;
+    justify-self: right;
+}

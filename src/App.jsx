@@ -1,18 +1,10 @@
 import './App.css'
-import Button from './Components/Button.jsx'
-import Start from './Components/Start.jsx'
-import StopServer from './Components/StopServer.jsx'
+import Menu from './Components/Menu.jsx'
 
 function App() {
   return(
     <>
-    <header>
-    <Button name="Учителя" type="teachers" index="0"/>
-    <Button name="Кабинеты" type="classes" index="1"/>
-    <Button name="Классы" type="groups" index="2"/> 
-    </header>
-    <Start/>
-    <StopServer/>
+    <Menu/>
     </>
   )
 }
@@ -47,6 +39,11 @@ export default App
     }
   }
     
-  "type": "commonjs",*/
+  "type": "commonjs",
+  
+  npm run electron-dev // запускает vite сервер (localhost:5173) ждёт, пока он запустится, открывает Electron окно с живым React-приложением
+  npm run electron-pack // vite build — пересобирает React-приложение в dist, electron-builder build --win — создаёт установщик .exe с новым кодом
+  
+  */
 
  
